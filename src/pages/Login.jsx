@@ -29,47 +29,24 @@ export default function Login() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleLogin = async () => {
+  const handleLogin = () => {
     if (!validateForm()) return;
 
     setLoading(true);
     setErrors({});
-    
-    try {
-      const res = await fetch("http://localhost:4000/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
 
-      if (!res.ok) {
-        throw new Error("Invalid email or password");
-      }
-
-      const data = await res.json();
-
-      // Show success animation
+    // Simulate success animation and redirect
+    setTimeout(() => {
       setLoginSuccess(true);
-      
-      // Save JWT token (using React state instead of localStorage for demo)
-      // In real app: localStorage.setItem("token", data.token);
-      
-      // Redirect after success animation
+
       setTimeout(() => {
         window.location.href = "/dashboard";
       }, 2000);
-      
-    } catch (err) {
-      setErrors({ form: err.message });
-    } finally {
-      setLoading(false);
-    }
+    }, 1000);
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleLogin();
-    }
+    if (e.key === "Enter") handleLogin();
   };
 
   if (loginSuccess) {
@@ -88,7 +65,6 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900 flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -inset-[10px] opacity-50">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
@@ -98,7 +74,6 @@ export default function Login() {
       </div>
 
       <div className="relative bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl p-8 w-full max-w-md border border-white/20">
-        {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl mb-6 shadow-lg">
             <Lock className="w-10 h-10 text-white" />
@@ -107,11 +82,7 @@ export default function Login() {
           <p className="text-gray-300">Sign in to continue your journey</p>
         </div>
 
-
-
-        {/* Form */}
         <div className="space-y-6">
-          {/* Email Field */}
           <div className="group">
             <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
               Email Address
@@ -138,7 +109,6 @@ export default function Login() {
             )}
           </div>
 
-          {/* Password Field */}
           <div className="group">
             <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
               Password
@@ -172,7 +142,6 @@ export default function Login() {
             )}
           </div>
 
-          {/* Remember Me & Forgot Password */}
           <div className="flex items-center justify-between">
             <label className="flex items-center cursor-pointer group">
               <input
@@ -195,7 +164,6 @@ export default function Login() {
             </button>
           </div>
 
-          {/* Form Error */}
           {errors.form && (
             <div className="flex items-center justify-center p-3 bg-red-500/10 border border-red-400/30 rounded-xl">
               <AlertCircle className="w-5 h-5 text-red-400 mr-2" />
@@ -203,7 +171,6 @@ export default function Login() {
             </div>
           )}
 
-          {/* Login Button */}
           <button
             onClick={handleLogin}
             disabled={loading}
@@ -218,16 +185,6 @@ export default function Login() {
               "Sign In"
             )}
           </button>
-        </div>
-
-        {/* Footer */}
-        <div className="mt-8 text-center">
-          <p className="text-gray-400 text-sm">
-            Don't have an account?{" "}
-            <button className="text-blue-400 hover:text-blue-300 transition-colors font-medium">
-              Sign up
-            </button>
-          </p>
         </div>
       </div>
 
